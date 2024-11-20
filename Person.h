@@ -66,46 +66,4 @@ public:
             return a.height < b.height;
         }
     };
-
-    /*friend std::ostream& operator<<(std::ostream& os, const Person& person)
-    {
-        os << person.yearOfBirth << " " << person.GetFullName() << " " << person.weight << " " << person.height << std::endl;
-        return os;
-    }*/
-
-    /*friend std::istream& operator>>(std::istream& is, Person& person)
-    {
-        std::cout << "Enter person year of birth: ";
-        while (!(is >> person.yearOfBirth))
-        {
-            std::cout << "Incorrect input for year of birth. Please enter an integer: ";
-            is.clear();
-            is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
-
-        std::cout << "Enter firstName: ";
-        is >> person.firstName;
-
-        std::cout << "Enter lastName: ";
-        is >> person.lastName;
-
-        std::cout << "Enter person weight: ";
-        while (!(is >> person.weight))
-        {
-            std::cout << "Incorrect input for weight. Please enter float nunber: ";
-            is.clear();
-            is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
-
-        std::cout << "Enter person height: ";
-        while (!(is >> person.height))
-        {
-            std::cout << "Incorrect input for height. Please enter float nunber: ";
-            is.clear();
-            is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
-
-        return is;
-    }*/
-
 };
