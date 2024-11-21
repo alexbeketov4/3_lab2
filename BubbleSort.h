@@ -1,10 +1,7 @@
 #pragma once
 #include "Isorter.h"
-#include "Person.h"
 #include "ShrdPtr.h"
-#include "LinkedListSequence.h"
-#include <iostream>
-#include <functional>
+#include "Sequence.h"
 
 template <typename T>
 class BubbleSort : public ISorter<T>

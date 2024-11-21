@@ -1,7 +1,4 @@
 #pragma once
-#include "ShrdPtr.h"
-#include "LinkedListSequence.h"
-#include <iostream>
 #include <functional>
 
 template <typename T>

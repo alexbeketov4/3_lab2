@@ -3,7 +3,6 @@
 #include "BinaryInsertionSort.h"
 #include "BubbleSort.h"
 #include "Person.h"
-#include <functional>
 #include <cassert>
 #include <string>
 
