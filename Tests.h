@@ -238,13 +238,17 @@ void MeasureSortTime(ISorter<T>& sorter, ShrdPtr<Sequence<T>> sequence, const st
 void TestSorts(size_t dataSize)
 {
     GenerateIntFile("int.txt", dataSize, 0, 10);
-    ShrdPtr<Sequence<int>> sequence(new LinkedListSequence<int>(LoadIntFile("int.txt")));
 
     BubbleSort<int> bubbleSort;
     InsertionSort<int> insertionSort;
     BinaryInsertionSort<int> binaryInsertionSort;
 
-    MeasureSortTime(bubbleSort, sequence, "Bubble Sort");
+    ShrdPtr<Sequence<int>> sequence(new LinkedListSequence<int>(LoadIntFile("int.txt")));
     MeasureSortTime(insertionSort, sequence, "Insertion Sort");
-    MeasureSortTime(binaryInsertionSort, sequence, "Binary Insertion Sort");
+
+    ShrdPtr<Sequence<int>> sequence1(new LinkedListSequence<int>(LoadIntFile("int.txt")));
+    MeasureSortTime(bubbleSort, sequence1, "Bubble Sort");
+
+    ShrdPtr<Sequence<int>> sequence2(new LinkedListSequence<int>(LoadIntFile("int.txt")));
+    MeasureSortTime(binaryInsertionSort, sequence2, "Binary Insertion Sort");
 }
