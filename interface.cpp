@@ -30,14 +30,14 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
-std::vector<int> ParseInput(const std::wstring& input) 
+LinkedListSequence<int> ParseInput(const std::wstring& input) 
 {
     std::wstringstream stream(input);
-    std::vector<int> result;
+    LinkedListSequence<int> result;
     int num;
     while (stream >> num) 
     {
-        result.push_back(num);
+        result.Append(num);
     }
     return result;
 }
@@ -208,18 +208,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HWND hEdit = GetDlgItem(hWnd, MAIN_EDIT);
             GetWindowText(hEdit, inputText, 256);
 
-            auto values = ParseInput(inputText);
-            if (values.empty())
-            {
-                MessageBox(hWnd, L"Enter a sequence", L"Error", MB_OK);
-                return 0;
-            }
-
-            sequence.reset(new LinkedListSequence<int>());
-            for (const int& value : values)
-            {
-                sequence->Append(value);
-            }
+            sequence.reset(new LinkedListSequence<int>(ParseInput(inputText)));
 
             MessageBox(hWnd, L"The sequence has been created", L"", MB_OK);
             DisplaySequence(hWnd);
