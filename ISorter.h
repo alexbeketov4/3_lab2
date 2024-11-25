@@ -1,5 +1,7 @@
 #pragma once
 #include <functional>
+#include "ShrdPtr.h"
+#include "Sequence.h"
 
 template <typename T>
 using Comparator = std::function<bool(const T&, const T&)>;

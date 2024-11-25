@@ -1,4 +1,6 @@
 #pragma once
+#include "UnqPtr.h"
+#include "LinkedListSmart.h"
 template<class T>
 class Sequence
 {

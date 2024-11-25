@@ -1,16 +1,20 @@
 #pragma once
 #include "InsertionSort.h"
 #include "BinaryInsertionSort.h"
+#include "LinkedListSequence.h"
 #include "BubbleSort.h"
 #include "Person.h"
+#include "Generator.h"
 #include <cassert>
 #include <string>
-
-int items[] = { 5, 2, 9, 1, 5, 6 };
+#include <fstream>
+#include <sstream>
+#include <chrono>
 
 void TestBubbleSortInt()
 {
-    ShrdPtr<Sequence<int>> sequence(new LinkedListSequence<int>(items, 6));
+    GenerateIntFile("int.txt", 10, 0, 100);
+    ShrdPtr<Sequence<int>> sequence(new LinkedListSequence<int>(LoadIntFile("int.txt")));
 
     BubbleSort<int> sorter;
 
@@ -24,11 +28,8 @@ void TestBubbleSortInt()
 
 void TestBubbleSortByYearOfBirth()
 {
-    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>());
-    sequence->Append(Person(2020, "lll", "lll", 200, 150));
-    sequence->Append(Person(2015, "bbb", "bbb", 180, 100));
-    sequence->Append(Person(1990, "aaa", "aaa", 190, 64));
-    sequence->Append(Person(1888, "ccc", "ccc", 160, 52));
+    GeneratePersonFile("persons.txt", 3, 7);
+    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>(LoadPersonsFromFile("persons.txt")));
 
     BubbleSort<Person> sorter;
     sorter.Sort(sequence, Person::YearOfBirthComparator());
@@ -41,11 +42,8 @@ void TestBubbleSortByYearOfBirth()
 
 void TestBubbleSortByLastname()
 {
-    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>());
-    sequence->Append(Person(2020, "lll", "lll", 200, 150));
-    sequence->Append(Person(2015, "bbb", "bbb", 180, 100));
-    sequence->Append(Person(1990, "aaa", "aaa", 190, 64));
-    sequence->Append(Person(1888, "ccc", "ccc", 160, 52));
+    GeneratePersonFile("persons.txt", 3, 7);
+    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>(LoadPersonsFromFile("persons.txt")));
 
     BubbleSort<Person> sorter;
     sorter.Sort(sequence, Person::LastnameComparator());
@@ -58,14 +56,11 @@ void TestBubbleSortByLastname()
 
 void TestBubbleSortByHeight()
 {
-    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>());
-    sequence->Append(Person(2020, "lll", "lll", 200, 150));
-    sequence->Append(Person(2015, "bbb", "bbb", 180, 100));
-    sequence->Append(Person(1990, "aaa", "aaa", 190, 64));
-    sequence->Append(Person(1888, "ccc", "ccc", 160, 52));
+    GeneratePersonFile("persons.txt", 3, 7);
+    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>(LoadPersonsFromFile("persons.txt")));
 
     BubbleSort<Person> sorter;
-    sorter.Sort(sequence, Person::HeightComporator());
+    sorter.Sort(sequence, Person::HeightComparator());
 
     for (size_t i = 0; i < sequence->GetLength() - 1; ++i)
     {
@@ -75,14 +70,11 @@ void TestBubbleSortByHeight()
 
 void TestBubbleSortByWeight()
 {
-    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>());
-    sequence->Append(Person(2020, "lll", "lll", 200, 150));
-    sequence->Append(Person(2015, "bbb", "bbb", 180, 100));
-    sequence->Append(Person(1990, "aaa", "aaa", 190, 64));
-    sequence->Append(Person(1888, "ccc", "ccc", 160, 52));
+    GeneratePersonFile("persons.txt", 3, 7);
+    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>(LoadPersonsFromFile("persons.txt")));
 
     BubbleSort<Person> sorter;
-    sorter.Sort(sequence, Person::WeightComporator());
+    sorter.Sort(sequence, Person::WeightComparator());
 
     for (size_t i = 0; i < sequence->GetLength() - 1; ++i)
     {
@@ -92,7 +84,8 @@ void TestBubbleSortByWeight()
 
 void TestInsertionSortInt()
 {
-    ShrdPtr<Sequence<int>> sequence(new LinkedListSequence<int>(items, 6));
+    GenerateIntFile("int.txt", 10, 0, 100);
+    ShrdPtr<Sequence<int>> sequence(new LinkedListSequence<int>(LoadIntFile("int.txt")));
 
     InsertionSort<int> sorter;
 
@@ -106,11 +99,8 @@ void TestInsertionSortInt()
 
 void TestInsertionSortByYearOfBirth()
 {
-    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>());
-    sequence->Append(Person(2020, "lll", "lll", 200, 150));
-    sequence->Append(Person(2015, "bbb", "bbb", 180, 100));
-    sequence->Append(Person(1990, "aaa", "aaa", 190, 64));
-    sequence->Append(Person(1888, "ccc", "ccc", 160, 52));
+    GeneratePersonFile("persons.txt", 3, 7);
+    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>(LoadPersonsFromFile("persons.txt")));
 
     InsertionSort<Person> sorter;
     sorter.Sort(sequence, Person::YearOfBirthComparator());
@@ -123,11 +113,8 @@ void TestInsertionSortByYearOfBirth()
 
 void TestInsertionSortByLastname()
 {
-    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>());
-    sequence->Append(Person(2020, "lll", "lll", 200, 150));
-    sequence->Append(Person(2015, "bbb", "bbb", 180, 100));
-    sequence->Append(Person(1990, "aaa", "aaa", 190, 64));
-    sequence->Append(Person(1888, "ccc", "ccc", 160, 52));
+    GeneratePersonFile("persons.txt", 3, 7);
+    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>(LoadPersonsFromFile("persons.txt")));
 
     InsertionSort<Person> sorter;
     sorter.Sort(sequence, Person::LastnameComparator());
@@ -140,14 +127,11 @@ void TestInsertionSortByLastname()
 
 void TestInsertionSortByHeight()
 {
-    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>());
-    sequence->Append(Person(2020, "lll", "lll", 200, 150));
-    sequence->Append(Person(2015, "bbb", "bbb", 180, 100));
-    sequence->Append(Person(1990, "aaa", "aaa", 190, 64));
-    sequence->Append(Person(1888, "ccc", "ccc", 160, 52));
+    GeneratePersonFile("persons.txt", 3, 7);
+    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>(LoadPersonsFromFile("persons.txt")));
 
     InsertionSort<Person> sorter;
-    sorter.Sort(sequence, Person::HeightComporator());
+    sorter.Sort(sequence, Person::HeightComparator());
 
     for (size_t i = 0; i < sequence->GetLength() - 1; ++i)
     {
@@ -157,14 +141,11 @@ void TestInsertionSortByHeight()
 
 void TestInsertionSortByWeight()
 {
-    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>());
-    sequence->Append(Person(2020, "lll", "lll", 200, 150));
-    sequence->Append(Person(2015, "bbb", "bbb", 180, 100));
-    sequence->Append(Person(1990, "aaa", "aaa", 190, 64));
-    sequence->Append(Person(1888, "ccc", "ccc", 160, 52));
+    GeneratePersonFile("persons.txt", 3, 7);
+    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>(LoadPersonsFromFile("persons.txt")));
 
     InsertionSort<Person> sorter;
-    sorter.Sort(sequence, Person::WeightComporator());
+    sorter.Sort(sequence, Person::WeightComparator());
 
     for (size_t i = 0; i < sequence->GetLength() - 1; ++i)
     {
@@ -174,7 +155,8 @@ void TestInsertionSortByWeight()
 
 void TestBinaryInsertionSortInt()
 {
-    ShrdPtr<Sequence<int>> sequence(new LinkedListSequence<int>(items, 6));
+    GenerateIntFile("int.txt", 10, 0, 100);
+    ShrdPtr<Sequence<int>> sequence(new LinkedListSequence<int>(LoadIntFile("int.txt")));
 
     BinaryInsertionSort<int> sorter;
 
@@ -188,11 +170,8 @@ void TestBinaryInsertionSortInt()
 
 void TestBinaryInsertionSortByYearOfBirth()
 {
-    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>());
-    sequence->Append(Person(2020, "lll", "lll", 200, 150));
-    sequence->Append(Person(2015, "bbb", "bbb", 180, 100));
-    sequence->Append(Person(1990, "aaa", "aaa", 190, 64));
-    sequence->Append(Person(1888, "ccc", "ccc", 160, 52));
+    GeneratePersonFile("persons.txt", 3, 7);
+    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>(LoadPersonsFromFile("persons.txt")));
 
     InsertionSort<Person> sorter;
     sorter.Sort(sequence, Person::YearOfBirthComparator());
@@ -205,11 +184,8 @@ void TestBinaryInsertionSortByYearOfBirth()
 
 void TestBinaryInsertionSortByLastname()
 {
-    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>());
-    sequence->Append(Person(2020, "lll", "lll", 200, 150));
-    sequence->Append(Person(2015, "bbb", "bbb", 180, 100));
-    sequence->Append(Person(1990, "aaa", "aaa", 190, 64));
-    sequence->Append(Person(1888, "ccc", "ccc", 160, 52));
+    GeneratePersonFile("persons.txt", 3, 7);
+    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>(LoadPersonsFromFile("persons.txt")));
 
     InsertionSort<Person> sorter;
     sorter.Sort(sequence, Person::LastnameComparator());
@@ -222,14 +198,11 @@ void TestBinaryInsertionSortByLastname()
 
 void TestBinaryInsertionSortByHeight()
 {
-    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>());
-    sequence->Append(Person(2020, "lll", "lll", 200, 150));
-    sequence->Append(Person(2015, "bbb", "bbb", 180, 100));
-    sequence->Append(Person(1990, "aaa", "aaa", 190, 64));
-    sequence->Append(Person(1888, "ccc", "ccc", 160, 52));
+    GeneratePersonFile("persons.txt", 3, 7);
+    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>(LoadPersonsFromFile("persons.txt")));
 
     InsertionSort<Person> sorter;
-    sorter.Sort(sequence, Person::HeightComporator());
+    sorter.Sort(sequence, Person::HeightComparator());
 
     for (size_t i = 0; i < sequence->GetLength() - 1; ++i)
     {
@@ -239,14 +212,11 @@ void TestBinaryInsertionSortByHeight()
 
 void TestBinaryInsertionSortByWeight()
 {
-    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>());
-    sequence->Append(Person(2020, "lll", "lll", 200, 150));
-    sequence->Append(Person(2015, "bbb", "bbb", 180, 100));
-    sequence->Append(Person(1990, "aaa", "aaa", 190, 64));
-    sequence->Append(Person(1888, "ccc", "ccc", 160, 52));
+    GeneratePersonFile("persons.txt", 3, 7);
+    ShrdPtr<Sequence<Person>> sequence(new LinkedListSequence<Person>(LoadPersonsFromFile("persons.txt")));
 
     InsertionSort<Person> sorter;
-    sorter.Sort(sequence, Person::WeightComporator());
+    sorter.Sort(sequence, Person::WeightComparator());
 
     for (size_t i = 0; i < sequence->GetLength() - 1; ++i)
     {
@@ -254,3 +224,27 @@ void TestBinaryInsertionSortByWeight()
     }
 }
 
+template <typename T>
+void MeasureSortTime(ISorter<T>& sorter, ShrdPtr<Sequence<T>> sequence, const std::string& sortName)
+{
+    auto start = std::chrono::high_resolution_clock::now();
+    sorter.Sort(sequence);
+    auto end = std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double> duration = end - start;
+    //std::cout << sortName << " took " << duration.count() << " seconds on " << sequence->GetLength() << " elements.\n";
+}
+
+void TestSorts(size_t dataSize)
+{
+    GenerateIntFile("int.txt", dataSize, 0, 10);
+    ShrdPtr<Sequence<int>> sequence(new LinkedListSequence<int>(LoadIntFile("int.txt")));
+
+    BubbleSort<int> bubbleSort;
+    InsertionSort<int> insertionSort;
+    BinaryInsertionSort<int> binaryInsertionSort;
+
+    MeasureSortTime(bubbleSort, sequence, "Bubble Sort");
+    MeasureSortTime(insertionSort, sequence, "Insertion Sort");
+    MeasureSortTime(binaryInsertionSort, sequence, "Binary Insertion Sort");
+}

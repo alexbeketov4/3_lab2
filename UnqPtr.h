@@ -5,7 +5,6 @@ class UnqPtr
 {
 private:
     T* ptr;
-
 public:
     UnqPtr() : ptr(nullptr) {}
 

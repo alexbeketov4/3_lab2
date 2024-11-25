@@ -50,7 +50,7 @@ public:
         }
     };
 
-    struct WeightComporator
+    struct WeightComparator
     {
         bool operator()(const Person& a, const Person& b) const
         {
@@ -58,7 +58,7 @@ public:
         }
     };
 
-    struct HeightComporator
+    struct HeightComparator
     {
         bool operator()(const Person& a, const Person& b) const
         {

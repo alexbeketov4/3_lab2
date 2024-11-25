@@ -1,0 +1,10 @@
+Andrey,Petrov,1961,194.2,83.3
+Sergey,Morozov,1957,179.8,93.3
+Maxim,Popov,1982,160.8,56.0
+Elena,Fedorova,1959,195.4,80.3
+Irina,Smirnova,1999,164.6,83.4
+Natalia,Morozova,1970,156.2,90.2
+Elena,Petrova,2001,178.4,87.1
+Anna,Sidorova,1990,199.5,63.3
+Tatiana,Morozova,1974,178.5,58.1
+Ekaterina,Fedorova,1959,164.0,85.0

@@ -1,8 +1,8 @@
-﻿
-#include "framework.h"
+﻿#include "framework.h"
 #include "3_lab2().h"
 #include "LinkedListSequence.h"
 #include "BubbleSort.h"
+#include "Generator.h"
 #include "Tests.h"
 #include <sstream>
 #include <vector>
@@ -10,12 +10,14 @@
 #include <memory>
 
 #define MAX_LOADSTRING 100
-#define IDC_MAIN_EDIT 101
-#define IDC_MAIN_BUTTON 102
-#define IDC_DISPLAY_SEQUENCE 103
-#define IDC_BUBBLESORT_BUTTON 104
-#define IDC_INSERTIONSORT_BUTTON 105
-#define IDC_BINARYINSERTIONSORT_BUTTON 106
+#define MAIN_EDIT 101
+#define MAIN_BUTTON 102
+#define DISPLAY_SEQUENCE 103
+#define BUBBLESORT_BUTTON 104
+#define INSERTIONSORT_BUTTON 105
+#define BINARYINSERTIONSORT_BUTTON 106
+#define GENERATE_BUTTON 107
+#define ENTER_SIZE 108
 
 ShrdPtr<Sequence<int>> sequence;
 
@@ -47,13 +49,13 @@ void DisplaySequence(HWND hWnd)
     {
         sequenceStr += std::to_wstring(sequence->Get(i)) + L" ";
     }
-    SetWindowText(GetDlgItem(hWnd, IDC_DISPLAY_SEQUENCE), sequenceStr.c_str());
+    SetWindowText(GetDlgItem(hWnd, DISPLAY_SEQUENCE), sequenceStr.c_str());
 }
 
 void RunTests()
 {
-    TestBubbleSortInt();
-    TestBubbleSortByYearOfBirth();
+    TestBubbleSortInt();   
+    TestBubbleSortByYearOfBirth();  
     TestBubbleSortByLastname();
     TestBubbleSortByHeight();
     TestBubbleSortByWeight();
@@ -151,27 +153,39 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    CreateWindowEx(0, L"EDIT", L"",
        WS_CHILD | WS_VISIBLE | WS_BORDER,
-       20, 20, 300, 25, hWnd, (HMENU)IDC_MAIN_EDIT, hInstance, nullptr);
+       20, 20, 300, 25, hWnd, (HMENU)MAIN_EDIT, hInstance, nullptr);
 
    CreateWindowEx(0, L"BUTTON", L"Create a sequence",
        WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-       330, 20, 300, 25, hWnd, (HMENU)IDC_MAIN_BUTTON, hInstance, nullptr);
+       330, 20, 200, 25, hWnd, (HMENU)MAIN_BUTTON, hInstance, nullptr);
+
+   CreateWindowEx(0, L"BUTTON", L"Generate a sequence",
+       WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+       550, 20, 200, 25, hWnd, (HMENU)GENERATE_BUTTON, hInstance, nullptr);
+
+   CreateWindowEx(0, L"EDIT", L"",
+       WS_CHILD | WS_VISIBLE | WS_BORDER,
+       630, 70, 75, 25, hWnd, (HMENU)ENTER_SIZE, hInstance, nullptr);
 
    CreateWindowEx(0, L"STATIC", L"",
        WS_CHILD | WS_VISIBLE | WS_BORDER,
-       200, 70, 360, 25, hWnd, (HMENU)IDC_DISPLAY_SEQUENCE, hInstance, nullptr);
+       200, 70, 360, 50, hWnd, (HMENU)DISPLAY_SEQUENCE, hInstance, nullptr);
 
    CreateWindowEx(0, L"BUTTON", L"BubbleSort",
        WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-       80, 130, 160, 25, hWnd, (HMENU)IDC_BUBBLESORT_BUTTON, hInstance, nullptr);
+       80, 155, 160, 25, hWnd, (HMENU)BUBBLESORT_BUTTON, hInstance, nullptr);
 
    CreateWindowEx(0, L"BUTTON", L"InsertionSort",
        WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-       280, 130, 160, 25, hWnd, (HMENU)IDC_INSERTIONSORT_BUTTON, hInstance, nullptr);
+       280, 155, 160, 25, hWnd, (HMENU)INSERTIONSORT_BUTTON, hInstance, nullptr);
 
    CreateWindowEx(0, L"BUTTON", L"BinaryInsertionSort",
        WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-       480, 130, 160, 25, hWnd, (HMENU)IDC_BINARYINSERTIONSORT_BUTTON, hInstance, nullptr);
+       480, 155, 160, 25, hWnd, (HMENU)BINARYINSERTIONSORT_BUTTON, hInstance, nullptr);
+
+   CreateWindow(L"STATIC", L"Size:", WS_VISIBLE | WS_CHILD,
+       640, 50, 50, 20, hWnd, NULL, hInst, NULL);
+
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
@@ -189,9 +203,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         int wmId = LOWORD(wParam);
         switch (wmId)
         {
-        case IDC_MAIN_BUTTON:
+        case MAIN_BUTTON:
         {
-            HWND hEdit = GetDlgItem(hWnd, IDC_MAIN_EDIT);
+            HWND hEdit = GetDlgItem(hWnd, MAIN_EDIT);
             GetWindowText(hEdit, inputText, 256);
 
             auto values = ParseInput(inputText);
@@ -212,7 +226,30 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             break;
         }
 
-        case IDC_BUBBLESORT_BUTTON:
+        case GENERATE_BUTTON:
+        {
+            HWND hEdit = GetDlgItem(hWnd, MAIN_EDIT);
+            GetWindowText(hEdit, inputText, 256);
+
+            GetWindowText(GetDlgItem(hWnd, ENTER_SIZE), inputText, 256);
+            int size = _wtoi(inputText);
+
+            if (size <= 0) 
+            {
+                MessageBox(hWnd, L"Enter a valid size for the sequence", L"Error", MB_OK);
+                return 0;
+            }
+
+            GenerateIntFile("int.txt", size, 0, 100);
+
+            sequence.reset(new LinkedListSequence<int>(LoadIntFile("int.txt")));
+
+            MessageBox(hWnd, L"The sequence has been created", L"", MB_OK);
+            DisplaySequence(hWnd);
+            break;
+        }
+
+        case BUBBLESORT_BUTTON:
         {
             if (sequence)
             {
@@ -227,7 +264,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             break;
         }
 
-        case IDC_INSERTIONSORT_BUTTON:
+        case INSERTIONSORT_BUTTON:
         {
             if (sequence)
             {
@@ -242,7 +279,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             break;
         }
 
-        case IDC_BINARYINSERTIONSORT_BUTTON:
+        case BINARYINSERTIONSORT_BUTTON:
         {
             if (sequence)
             {
