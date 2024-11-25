@@ -17,7 +17,7 @@
 #define INSERTIONSORT_BUTTON 105
 #define BINARYINSERTIONSORT_BUTTON 106
 #define GENERATE_BUTTON 107
-#define ENTER_SIZE 108
+#define ENTER_SIZE_BUTTON 108
 
 ShrdPtr<Sequence<int>> sequence;
 
@@ -165,7 +165,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    CreateWindowEx(0, L"EDIT", L"",
        WS_CHILD | WS_VISIBLE | WS_BORDER,
-       630, 70, 75, 25, hWnd, (HMENU)ENTER_SIZE, hInstance, nullptr);
+       630, 70, 75, 25, hWnd, (HMENU)ENTER_SIZE_BUTTON, hInstance, nullptr);
 
    CreateWindowEx(0, L"STATIC", L"",
        WS_CHILD | WS_VISIBLE | WS_BORDER,
@@ -220,7 +220,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HWND hEdit = GetDlgItem(hWnd, MAIN_EDIT);
             GetWindowText(hEdit, inputText, 256);
 
-            GetWindowText(GetDlgItem(hWnd, ENTER_SIZE), inputText, 256);
+            GetWindowText(GetDlgItem(hWnd, ENTER_SIZE_BUTTON), inputText, 256);
             int size = _wtoi(inputText);
 
             if (size <= 0) 
